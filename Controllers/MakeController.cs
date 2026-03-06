@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartBikeBD.Data;
 using SmartBikeBD.Models;
 
 
@@ -6,16 +7,82 @@ namespace SmartBikeBD.Controllers
 {
     public class MakeController : Controller
     {
-        public IActionResult Bikes()
+        private readonly AppDbContext _context;
+        public MakeController(AppDbContext context)
         {
-          Make make=new Make
-          {
-              Id = 1,
-              Name = "Yamaha"
-          };
-            //return View(make);
-            ContentResult CR = new ContentResult { Content = "Hello World!" };
-            return CR;
+            _context = context;
         }
+
+        public IActionResult Index()
+        {
+            var makes = _context.Makes.ToList();
+            return View(makes);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Make make)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Makes.Add(make);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(make);
+        }
+
+
+        public IActionResult Edit(int id)
+        {
+            var make= _context.Makes.Find(id);
+           if(make==null)
+            {
+                return NotFound();
+            }
+            return View(make);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Make make)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Makes.Update(make);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(make);
+
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var make =_context.Makes.Find(id);
+            if(make==null)
+            {
+                return NotFound();
+            }
+            return View(make);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var make = _context.Makes.Find(id);
+            if (make == null)
+            {
+                return NotFound();
+            }
+            _context.Makes.Remove(make);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

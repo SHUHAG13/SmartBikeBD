@@ -1,0 +1,35 @@
+﻿@model SmartBikeBD.Models.Make
+@{
+    ViewBag.Title = "Edit Make";
+}
+
+<br />
+
+<div class="row mt-5">
+    <div class="col-md-8">
+        <h1>Edit Make</h1>
+
+        <form asp-action="Edit" method="post">
+
+            <div class="row mb-3">
+                <div class="col-md-2">
+                    <label asp-for="Name" class="form-label"></label>
+                </div>
+
+                <div class="col-md-4">
+                    <input asp-for="Name" class="form-control" />
+
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary me-2">Update</button>
+                    <a asp-action="Index" class="btn btn-success">Back</a>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>

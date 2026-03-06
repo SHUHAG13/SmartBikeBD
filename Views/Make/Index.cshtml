@@ -1,0 +1,49 @@
+﻿@model IEnumerable<SmartBikeBD.Models.Make>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Make of Vehicle</h2>
+        <a asp-action="Create" class="btn btn-primary">Create New Make</a>
+    </div>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th style="width:70%">Name</th>
+                <th style="width:30%">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var make in Model)
+            {
+                <tr>
+                    <td>@make.Name</td>
+
+                    <td>
+                        <a class="btn btn-sm btn-warning"
+                           asp-action="Edit"
+                           asp-route-id="@make.Id">
+                            Edit
+                        </a>
+
+                        <a class="btn btn-sm btn-danger"
+                           asp-action="Delete"
+                           asp-route-id="@make.Id">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
